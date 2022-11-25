@@ -1,0 +1,19 @@
+{
+    "playfield":[
+        {
+            "official" : true,
+            "female" : true,
+            "content" : "/dragon/champion/splash/akali_7.jpg",
+            "posx" : 768,
+            "posy" : 422,
+            "answer" : "akali"
+        },{
+            "official" : true,
+            "female" : true,
+            "content" : "",
+            "posx" : 50,
+            "posy" : 50,
+            "answer" : ""
+        }
+    ]
+}

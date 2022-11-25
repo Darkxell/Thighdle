@@ -6,7 +6,8 @@
     <title>Thighdle</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <!--<link rel='stylesheet' type='text/css' media='screen' href='main.css'>-->
-    <!--<script src='main.js'></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src='main.js'></script>
 </head>
 <body>
     <!--Data init-->
@@ -177,13 +178,14 @@
         <p>Can you name a champion just from a picture of their thighs?</p>
 
         <form>
-            Only official artwork<input type="checkbox" value="option-official"><br>
-            Only females<input type="checkbox" value="option-females" checked><br>
-            Daily<input type="radio" name="gametype" value="option-daily">Endless<input type="radio" name="gametype" value="option-endless" checked><br>
-            <button type="submit">Play</button><!--Actually don't use submit, use JS here to keep things clientside-->
+            Only official artwork<input type="checkbox" id="option-official" value="option-official"><br>
+            Only females<input type="checkbox" id="option-females" value="option-females" checked><br>
+            Daily<input type="radio" name="gametype" id="option-daily" value="option-daily">
+            Endless<input type="radio" name="gametype" id="option-endless" value="option-endless" checked><br>
         </form>
+        <button id="button-start">Play</button>
     </div>
-    <div id="page-play">
+    <div id="page-play" style="display: none;">
         <h1>Thighdle</h1>
         <h2>Who is this champion?</h2>
         <p>Image zooms out every failed attempt</p>
