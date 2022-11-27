@@ -6,6 +6,7 @@ var property_females = false;
 var property_gametype = GameType.Daily;
 
 var gamedata;
+var lastcard;
 
 /* Ajax call to fully reload the data object from a serverside pure Json file. */
 function loadJsonData(callback) {   
@@ -26,7 +27,19 @@ function loadCardRandom() {
         console.error("Could not load a random play card. Data dump : " + gamedata);
         return;
     }
-    var randid = Math.floor(Math.random() * gamedata.length);
+    lastcard = gamedata[ Math.floor(Math.random() * gamedata.length) ];
+    
+    var canvas = document.getElementById("playfield-canvas");
+    var context = canvas.getContext("2d");
+    var centerX = canvas.width / 2 - lastcard.posx;
+    var centerY = canvas.height / 2 - lastcard.posy;
+    var imageObj = new Image();
+    imageObj.src = lastcard.content;
+    imageObj.onload = function () {
+        context.drawImage(imageObj, centerX, centerY);
+    };
+
+    console.log("Loaded image from " + lastcard.answer + ", card link : " + lastcard.content);
 }
 
 /* Onclick event handling */
@@ -51,10 +64,14 @@ $(document).ready(function(){
         // Prune game data to only leave the correct cards
         if(gamedata)
         gamedata = gamedata.filter(function(item) {
-            return item.official == property_official && item.female == property_females
+            return item.official != property_official || item.female != property_females
         });
 
-        console.log("Game started with the following properties : Official " + property_official + " / Females only " + property_females + " / GameType " + property_gametype);
+        console.log("Game started with the following properties :\nOfficial " + property_official 
+            + "\nFemales only " + property_females + "\nGameType " + property_gametype
+            + "\nGamedata still contains " + gamedata.length + " play cards.");
+    
+        loadCardRandom();
     });
 
 });

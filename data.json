@@ -2,16 +2,16 @@
     {
         "official" : true,
         "female" : true,
-        "content" : "/dragon/champion/splash/akali_7.jpg",
-        "posx" : 768,
-        "posy" : 422,
-        "answer" : "akali"
+        "content" : "dragon/champion/splash/Ahri_0.jpg",
+        "posx" : 773,
+        "posy" : 481,
+        "answer" : "ahri"
     },{
         "official" : true,
         "female" : true,
-        "content" : "",
-        "posx" : 50,
-        "posy" : 50,
-        "answer" : ""
+        "content" : "dragon/champion/splash/Akali_7.jpg",
+        "posx" : 768,
+        "posy" : 422,
+        "answer" : "akali"
     }
 ]
