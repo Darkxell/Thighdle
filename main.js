@@ -37,7 +37,6 @@ function drawChampionCard(card, zoom){
     var imageObj = new Image();
     imageObj.src = card.content;
     imageObj.onload = function () {
-        console.log(source_left +" / "+ source_top  +" / "+ zoom  +" / "+ source_height  +" / "+ destination_width  +" / "+ destination_height);
         context.drawImage(imageObj, source_left, source_top, zoom, source_height, 0, 0, destination_width, destination_height);
     };
 }
@@ -45,6 +44,8 @@ function drawChampionCard(card, zoom){
 /** Loads a random card from pruned gamedata */
 function loadCardRandom() {
     CurrentGameData.zoom = CurrentGameData.defaultzoom;
+    CurrentGameData.attempts = [];
+    $("#faillist").empty();
     if(!gamedata || !gamedata.length){
         console.error("Could not load a random play card. Data dump : " + gamedata);
         return;
@@ -63,8 +64,12 @@ function onAnswerWin() {
 
 /** Event called upon pressing the answer button, when the player looses. 
  * Note that this event is NOT always called on pressing the answer button, as edge cases may not trigger a complete fail (like an empty field). */
-function onAnswerLoose() {
-    CurrentGameData.zoom += 50;
+function onAnswerLoose(guess) {
+    CurrentGameData.zoom += 25;
+    CurrentGameData.attempts.push(guess);
+    $("#faillist").empty();
+    CurrentGameData.attempts.forEach(elem => $("#faillist").append(elem + " "));
+    
     drawChampionCard(lastcard, CurrentGameData.zoom);
 }
 
@@ -105,12 +110,13 @@ $(document).ready(function(){
 
     // Answer button
     $("#answer-button").click(function(){
-        var answer = $("#answer-field").value;
+        var answer = $("#answer-field").val().toLowerCase();
+        console.log("Answered \"" + answer + "\", actual answer was : " + lastcard.answer);
         if(answer === lastcard.answer){
             onAnswerWin();
         } else {
             //TODO : Add checks here for malformed data to not loose but just cancel the attempt
-            onAnswerLoose();
+            onAnswerLoose(answer);
         }
     });
 
