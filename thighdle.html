@@ -7,6 +7,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <!--<link rel='stylesheet' type='text/css' media='screen' href='main.css'>-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="http://davidbau.com/encode/seedrandom.min.js"></script><!-- More info at: http://davidbau.com/seedrandom -->
     <script src='main.js'></script>
 </head>
 <body>
@@ -192,9 +193,9 @@
 
         <canvas id="playfield-canvas" width="350" height="220"></canvas>
         <br>
-        <input type="text" list="champions">
+        <input type="text" id="answer-field" list="champions">
         <br>
-        <button>Answer</button>
+        <button id="answer-button">Answer</button>
         <br>
         <p>You have already tried the following champions : <span id="faillist">null</span></p>
     </div>

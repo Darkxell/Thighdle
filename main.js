@@ -8,7 +8,9 @@ var property_gametype = GameType.Daily;
 var gamedata;
 var lastcard;
 
-/* Ajax call to fully reload the data object from a serverside pure Json file. */
+const CurrentGameData = { defaultzoom : 200, zoom : 200, attempts : [], streak : 0};
+
+/** Ajax call to fully reload the data object from a serverside pure Json file. */
 function loadJsonData(callback) {   
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
@@ -21,25 +23,49 @@ function loadJsonData(callback) {
     xobj.send(null);  
 }
 
-/* Loads a random card from pruned gamedata */
+/** Draws The champion from the parsed card at the wanted zoom level 
+ * Zoom: The width of the source image to draw to the canvas, in pixels
+*/
+function drawChampionCard(card, zoom){
+    var canvas = document.getElementById("playfield-canvas");
+    var destination_width = canvas.width;
+    var destination_height = canvas.height;
+    var context = canvas.getContext("2d");
+    var source_left = card.posx - zoom / 2;
+    var source_top = card.posy - zoom / 2;
+    var source_height = zoom * destination_height / destination_width;
+    var imageObj = new Image();
+    imageObj.src = card.content;
+    imageObj.onload = function () {
+        console.log(source_left +" / "+ source_top  +" / "+ zoom  +" / "+ source_height  +" / "+ destination_width  +" / "+ destination_height);
+        context.drawImage(imageObj, source_left, source_top, zoom, source_height, 0, 0, destination_width, destination_height);
+    };
+}
+
+/** Loads a random card from pruned gamedata */
 function loadCardRandom() {
+    CurrentGameData.zoom = CurrentGameData.defaultzoom;
     if(!gamedata || !gamedata.length){
         console.error("Could not load a random play card. Data dump : " + gamedata);
         return;
     }
+
     lastcard = gamedata[ Math.floor(Math.random() * gamedata.length) ];
-    
-    var canvas = document.getElementById("playfield-canvas");
-    var context = canvas.getContext("2d");
-    var centerX = canvas.width / 2 - lastcard.posx;
-    var centerY = canvas.height / 2 - lastcard.posy;
-    var imageObj = new Image();
-    imageObj.src = lastcard.content;
-    imageObj.onload = function () {
-        context.drawImage(imageObj, centerX, centerY);
-    };
+    drawChampionCard(lastcard, CurrentGameData.defaultzoom);
 
     console.log("Loaded image from " + lastcard.answer + ", card link : " + lastcard.content);
+}
+
+/** Event called upon pressing the answer button, when the player wins. */
+function onAnswerWin() {
+    loadCardRandom();
+}
+
+/** Event called upon pressing the answer button, when the player looses. 
+ * Note that this event is NOT always called on pressing the answer button, as edge cases may not trigger a complete fail (like an empty field). */
+function onAnswerLoose() {
+    CurrentGameData.zoom += 50;
+    drawChampionCard(lastcard, CurrentGameData.zoom);
 }
 
 /* Onclick event handling */
@@ -75,6 +101,17 @@ $(document).ready(function(){
             + "\nGamedata still contains " + gamedata.length + " play cards.");
     
         loadCardRandom();
+    });
+
+    // Answer button
+    $("#answer-button").click(function(){
+        var answer = $("#answer-field").value;
+        if(answer === lastcard.answer){
+            onAnswerWin();
+        } else {
+            //TODO : Add checks here for malformed data to not loose but just cancel the attempt
+            onAnswerLoose();
+        }
     });
 
 });
