@@ -39,5 +39,8 @@
     {"official" : true, "female" : true, "content" : "dragon/champion/splash/Akali_15.jpg", "posx" : 859, "posy" : 566, "answer" : "akali"},
     {"official" : true, "female" : true, "content" : "dragon/champion/splash/Akali_32.jpg", "posx" : 562, "posy" : 439, "answer" : "akali"},
     {"official" : true, "female" : true, "content" : "dragon/champion/splash/Akali_50.jpg", "posx" : 607, "posy" : 438, "answer" : "akali"},
-    {"official" : true, "female" : true, "content" : "dragon/champion/splash/Akali_61.jpg", "posx" : 887, "posy" : 135, "answer" : "akali"}
+    {"official" : true, "female" : true, "content" : "dragon/champion/splash/Akali_61.jpg", "posx" : 887, "posy" : 135, "answer" : "akali"},
+    {"official" : true, "female" : false, "content" : "dragon/champion/splash/Akshan_0.jpg", "posx" : 450, "posy" : 138, "answer" : "akshan"},
+    {"official" : true, "female" : false, "content" : "dragon/champion/splash/Akshan_1.jpg", "posx" : 647, "posy" : 633, "answer" : "akshan"},
+    {"official" : true, "female" : false, "content" : "dragon/champion/splash/Akshan_10.jpg", "posx" : 788, "posy" : 381, "answer" : "akshan"}
 ]
