@@ -64,7 +64,10 @@ $(document).ready(function(){
         // Prune game data to only leave the correct cards
         if(gamedata)
         gamedata = gamedata.filter(function(item) {
-            return item.official != property_official || item.female != property_females
+            if(property_females && !item.female) return false;
+            if(property_official && !item.official) return false;
+
+            return true;
         });
 
         console.log("Game started with the following properties :\nOfficial " + property_official 
